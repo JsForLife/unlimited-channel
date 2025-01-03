@@ -17,6 +17,10 @@ Send and receive message
 ch.In() <- 1
 println(<-ch.Out)
 ```
+Close
+```go
+ch.Close()
+```
 
 ## License
 This package is licensed under the MIT License.
