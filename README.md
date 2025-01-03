@@ -10,12 +10,12 @@ This package requires Go 1.18.
 ## Basic Usage
 Init channel
 ```go
-in, out := NewUnLimitedChannel[int]()
+ch := NewUnLimitedChannel[int]()
 ```
 Send and receive message
 ```go
-in <- 1
-println(<-out)
+ch.In() <- 1
+println(<-ch.Out)
 ```
 
 ## License

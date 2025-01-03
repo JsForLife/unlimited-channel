@@ -1,6 +1,10 @@
 package unlimitedchannel
 
-func NewUnLimitedChannel[T any]() (chan<- T, <-chan T) {
+type UnLimitedChannel[T any] struct {
+	in, out chan T
+}
+
+func NewUnLimitedChannel[T any]() *UnLimitedChannel[T] {
 	in, out := make(chan T), make(chan T)
 	go func() {
 		buffer := []T{}
@@ -36,5 +40,20 @@ func NewUnLimitedChannel[T any]() (chan<- T, <-chan T) {
 		}
 	}()
 
-	return in, out
+	return &UnLimitedChannel[T]{
+		in:  in,
+		out: out,
+	}
+}
+
+func (ch *UnLimitedChannel[T]) In() chan<- T {
+	return ch.in
+}
+
+func (ch *UnLimitedChannel[T]) Out() <-chan T {
+	return ch.out
+}
+
+func (ch *UnLimitedChannel[T]) Close() {
+	close(ch.in)
 }

@@ -6,21 +6,21 @@ import (
 )
 
 func TestNewUnLimitedChannel(t *testing.T) {
-	in, out := NewUnLimitedChannel[int]()
+	ch := NewUnLimitedChannel[int]()
 	var wg sync.WaitGroup
 	wg.Add(2)
 
 	go func() {
 		defer wg.Done()
 		for i := 0; i < 100; i++ {
-			in <- i
+			ch.In() <- i
 		}
-		close(in)
+		ch.Close()
 	}()
 
 	go func() {
 		defer wg.Done()
-		for val := range out {
+		for val := range ch.Out() {
 			t.Log(val)
 		}
 	}()
