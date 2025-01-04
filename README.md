@@ -2,7 +2,7 @@
 A channel with unlimited buffer in golang
 
 ```go
-import "unlimited-channel"
+import "github.com/JsForLife/unlimited-channel"
 ```
 
 This package requires Go 1.18.
